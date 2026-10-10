@@ -1,0 +1,99 @@
+﻿@model IEnumerable<CrudApplication.Models.Employee>
+
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">Employees</h2>
+        <p class="text-secondary mb-0">Manage your employee records</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary px-4">
+        + Add Employee
+    </a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Success"]
+        <button type="button" class="btn-close"
+                data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="page-card p-3 p-md-4">
+    <form asp-action="Index" method="get"
+          class="row g-2 mb-4">
+        <div class="col-md-9">
+            <input type="text" name="searchString"
+                   value="@ViewData["SearchString"]"
+                   class="form-control"
+                   placeholder="Search by name or department..." />
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+            <button class="btn btn-primary flex-fill" type="submit">
+                Search
+            </button>
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">Reset</a>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Department</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.EmployeeId</td>
+                        <td class="fw-semibold">@item.Name</td>
+                        <td>@item.Email</td>
+                        <td>@(item.Phone ?? "-")</td>
+                        <td>
+                            <span class="badge text-bg-light">
+                                @item.Department
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <a asp-action="Details"
+                                   asp-route-id="@item.EmployeeId"
+                                   class="btn btn-sm btn-outline-info">View</a>
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.EmployeeId"
+                                   class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.EmployeeId"
+                                   class="btn btn-sm btn-outline-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-secondary">
+                            No employees found. Add your first employee.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-secondary small">
+        Total employees displayed: @Model.Count()
+    </div>
+</div>

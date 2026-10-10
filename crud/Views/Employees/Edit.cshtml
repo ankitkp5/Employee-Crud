@@ -1,0 +1,60 @@
+﻿@model CrudApplication.Models.Employee
+
+@{
+    ViewData["Title"] = "Edit Employee";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="page-card p-4 p-md-5">
+            <h2 class="fw-bold">Edit Employee</h2>
+            <p class="text-secondary">Update the employee information.</p>
+
+            <form asp-action="Edit" asp-route-id="@Model.EmployeeId"
+                  method="post">
+                <input type="hidden" asp-for="EmployeeId" />
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Phone" class="form-label"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Department" class="form-label"></label>
+                    <input asp-for="Department" class="form-control" />
+                    <span asp-validation-for="Department"
+                          class="text-danger"></span>
+                </div>  
+
+                <button type="submit" class="btn btn-primary px-4">
+                    Update Employee
+                </button>
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
